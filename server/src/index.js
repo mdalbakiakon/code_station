@@ -4,6 +4,7 @@ import cors from 'cors'
 import { pool } from './db.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { requireAuth, requireRole } from './middleware/auth.js'
 
 dotenv.config()
 
@@ -101,6 +102,16 @@ app.post('/api/login', async (req, res) => {
 })
 
 
+
+
+app.get('/api/me', requireAuth, async (req, res) => {
+  res.json({ status: 'ok', user: req.user })
+})
+
+
+app.get('/api/instructor-only', requireAuth, requireRole('instructor', 'admin'), async (req, res) => {
+  res.json({ status: 'ok', message: 'Welcome, instructor!' })
+})
 
 
 app.listen(PORT, () => {
