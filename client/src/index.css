@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+:root {
+  --col-bg: #101010;
+  --col-bg-secondary: #181818;
+  --col-surface: #050505;
+  --col-border: #222222;
+  --col-border-focus: rgba(255, 255, 255, 0.4);
+  --col-txt-primary: #ffffff;
+  --col-txt-secondary: #cccccc;
+}
+ 
+
+body{
+    font-family: "Inter", sans-serif;
+    background-color: var(--col-bg);
+    color: var(--col-txt-primary);
+}
