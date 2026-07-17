@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { X } from "lucide-react";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -18,6 +19,12 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    if (formData.password.length < 8) {
+      setError("Password must be at least 8 characters long.");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -41,16 +48,15 @@ const Signup = () => {
     }
   };
 
+  
   return (
     <div className="h-dvh w-full flex items-center justify-center p-2.5 bg-[linear-gradient(to_top_right,var(--col-surface)_70%,transparent)]">
-
       <div className="w-2/3 h-full shadow-2xl rounded-4xl overflow-hidden relative hidden lg:block">
         <img
           src="/signup_hero.jpg"
           alt="signup_hero_image"
           className="h-full w-full object-cover object-center opacity-50"
         />
-
 
         <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_bottom,transparent_50%,var(--col-surface))] z-10">
           <div className="w-full h-full relative">
@@ -65,9 +71,14 @@ const Signup = () => {
         </div>
       </div>
 
+
       {/* signup form */}
       <div className="flex-1 h-full flex flex-col items-center justify-center p-2.5 tracking-tighter">
-        <img src="/logo.svg" alt="" className="w-35 aspect-square mb-15"/>
+        <img
+          src="/logo.svg"
+          alt=""
+          className="w-15 lg:w-30 aspect-square mb-10"
+        />
 
         <form
           onSubmit={handleSubmit}
@@ -78,8 +89,13 @@ const Signup = () => {
           </h2>
 
           {error && (
-            <div className="text-sm text-red-400 bg-red-950/40 border border-red-900 rounded-lg px-3 py-2">
-              {error}
+            <div className="fixed bottom-2.5 right-2.5 flex justify-center items-center gap-1.5 text-sm bg-red-500 text-white rounded-lg px-3 py-2">
+              {error}{" "}
+              <X
+                onClick={() => setError(null)}
+                strokeWidth={3.5}
+                className="cursor-pointer w-5 aspect-square"
+              />
             </div>
           )}
 
@@ -90,7 +106,7 @@ const Signup = () => {
             value={formData.name}
             onChange={handleChange}
             required
-            className="bg-(--col-bg) placeholder:text-sm placeholder:text-white/25 rounded-xl px-3 py-2 outline-none focus:bg-(--col-bg-secondary)"
+            className="bg-(--col-bg) placeholder:text-sm placeholder:text-white/25 rounded-lg px-3 py-2 outline-none focus:bg-(--col-bg-secondary)"
           />
 
           <input
@@ -100,7 +116,7 @@ const Signup = () => {
             value={formData.email}
             onChange={handleChange}
             required
-            className="bg-(--col-bg) placeholder:text-sm placeholder:text-white/25 rounded-xl px-3 py-2 outline-none focus:bg-(--col-bg-secondary)"
+            className="bg-(--col-bg) placeholder:text-sm placeholder:text-white/25 rounded-lg px-3 py-2 outline-none focus:bg-(--col-bg-secondary)"
           />
 
           <input
@@ -110,17 +126,24 @@ const Signup = () => {
             value={formData.password}
             onChange={handleChange}
             required
-            className="bg-(--col-bg) placeholder:text-sm placeholder:text-white/25 rounded-xl px-3 py-2 outline-none focus:bg-(--col-bg-secondary)"
+            className="bg-(--col-bg) placeholder:text-sm placeholder:text-white/25 rounded-lg px-3 py-2 outline-none focus:bg-(--col-bg-secondary)"
           />
 
           <button
             type="submit"
             disabled={loading}
-            className="bg-white text-(--col-bg) font-bold rounded-xl px-3 py-2 hover:bg-white/90 disabled:opacity-50 cursor-pointer select-none"
+            className="bg-white text-(--col-bg) font-bold rounded-lg px-3 py-2 hover:bg-white/90 disabled:opacity-50 cursor-pointer select-none"
           >
             {loading ? "Creating account..." : "Sign Up"}
           </button>
         </form>
+
+        <p className="text-xs font-semibold text-white/40 mt-3.5">
+          Already have an account?{" "}
+          <Link to="/login" className="underline hover:text-white/80">
+            Log in
+          </Link>
+        </p>
       </div>
     </div>
   );

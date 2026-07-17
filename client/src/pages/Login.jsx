@@ -25,7 +25,8 @@ const Login = () => {
 
 
       <div className="flex-1 h-full flex flex-col items-center justify-center p-2.5 tracking-tighter">
-        <img src="/logo.svg" alt="" className="w-35 aspect-square mb-15"/>
+        <img src="/logo.svg" alt="" className="w-15 lg:w-30 aspect-square mb-10"/>
+        
       </div>
     </div>
   );
