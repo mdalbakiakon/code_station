@@ -1,6 +1,17 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
+
+// convert each word into capitalize
+const handleTitleCase = (val) => {
+    return val.toLowerCase()
+        .split(" ")
+        .map((word)=>word.charAt(0).toUpperCase()+word.slice(1))
+        .join(" ");
+}
+
+
+// user schema
 const userSchema = new mongoose.Schema({
 
     // register/login auth
@@ -34,14 +45,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         maxLength: [50, 'first name is too long'],
         default: "",
-        set: (val) => val.toLowerCase().split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")
+        set: handleTitleCase
     },
 
     last_name: {
         type: String,
         maxLength: [30, 'last name is too long'],
         default: "",
-        set: (val) => val.toLowerCase().split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")
+        set: handleTitleCase
     },
 
     bio: {
