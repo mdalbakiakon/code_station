@@ -1,5 +1,5 @@
 import userModel from "../models/user.model.js";
-import jwt from "jsonwebtoken";
+import authUtil from "../utils/auth.util.js";
 
 // POST -- /api/auth/register
 const registerUser = async (req, res) => {
@@ -13,17 +13,15 @@ const registerUser = async (req, res) => {
         }
 
         // user input from middleware
-        const email = req.email;
-        const password = req.password;
-        const role = req.role;
+        const {email, password, role} = req;
 
-        
+
         // checking if exist user
         const isUserExist = await userModel.exists({
             email
         })
 
-        
+
         // if user exists
         if (isUserExist) {
             return res.status(409).json({
@@ -44,24 +42,11 @@ const registerUser = async (req, res) => {
         const showUser = newUser.toObject();
         delete showUser.password;
 
-
         // generating token
-        const token = jwt.sign(
-            { id: newUser._id, role: newUser.role },
-            process.env.JWT_SECRET,
-            { expiresIn: '1d' }
-        );
-
+        const token = authUtil.generateToken(newUser);
 
         // saving token
-        res.cookie("CODE_STATION_TOKEN", token,
-            {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict',
-                maxAge: 24 * 60 * 60 * 1000
-            }
-        )
+        authUtil.setAuthCookie(res, token);
 
         // returning success message
         return res.status(201).json({
@@ -80,4 +65,66 @@ const registerUser = async (req, res) => {
     }
 }
 
-export default { registerUser };
+
+// POST -- /api/auth/login
+const loginUser = async (req, res) => {
+    try {
+
+        // from middleware
+        const {email, username, password, identifierType} = req
+
+        // var declaration for global scope
+        let foundUser;
+
+        // search based on identifier type
+        if(identifierType === 'email'){
+            foundUser = await userModel.findOne({
+                email: email
+            }).select("+password")
+        }else{
+            foundUser = await userModel.findOne({
+                username: username
+            }).select("+password")
+        }
+
+        // if there is no user found
+        if(!foundUser){
+            return res.status(401).json({
+                message: "no user found"
+            })
+        }
+
+        // check for password from database hashed password
+        const isPasswordValid = await foundUser.comparePassword(password);
+
+        // if password did not match
+        if(!isPasswordValid){
+            return res.status(401).json({
+                message: "wrong password encountered"
+            })
+        }
+
+        // generating jwt token
+        const token = authUtil.generateToken(foundUser);
+        
+        // saving token in cookie
+        authUtil.setAuthCookie(res, token);
+        
+        // final success message
+        return res.status(200).json({
+            message: "user login successful"
+        })
+
+    } catch (error) {
+        console.log(error);
+
+        // fallback error handling
+        return res.status(500).json({
+            message: "something went wrong in user login",
+            error: error.message
+        })
+    }
+}
+
+
+export default { registerUser, loginUser };

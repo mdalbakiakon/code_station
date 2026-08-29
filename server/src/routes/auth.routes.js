@@ -9,5 +9,8 @@ const router = express.Router();
 // POST -- registration
 router.post('/register', authMiddleware.authInputValidation, authController.registerUser);
 
+// POST -- login
+router.post('/login', authMiddleware.authInputValidation, authController.loginUser);
+
 
 export default router;
