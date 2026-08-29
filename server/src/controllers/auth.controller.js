@@ -1,3 +1,4 @@
+import tokenBlacklistModel from "../models/tokenBlacklist.model.js";
 import userModel from "../models/user.model.js";
 import authUtil from "../utils/auth.util.js";
 
@@ -127,4 +128,37 @@ const loginUser = async (req, res) => {
 }
 
 
-export default { registerUser, loginUser };
+// POST -- /api/auth/login
+const logoutUser = async (req, res) => {
+    try {
+
+        // add in blacklist
+        await tokenBlacklistModel.create({
+            jti: req.user.token_jti,
+            expiresAt: new Date(req.user.token_exp * 1000)
+        });
+
+        // delete from client end
+        res.clearCookie("CODE_STATION_TOKEN", {
+            httpOnly: true,
+            sameSite: 'strict',
+            secure: process.env.NODE_ENV === "production"
+        });
+
+        // retrurn success message
+        return res.status(200).json({
+            message: 'user logout successful'
+        })
+
+    } catch (error) {
+        console.log(error);
+
+        // fallback error handling
+        return res.status(500).json({
+            message: 'something went wrong in user logout',
+            error: error.message
+        })
+    }
+}
+
+export default { registerUser, loginUser, logoutUser };
