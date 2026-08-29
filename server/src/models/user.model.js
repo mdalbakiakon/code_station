@@ -34,14 +34,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         maxLength: [50, 'first name is too long'],
         default: "",
-        set: (val) => val.charAt(0).toUpperCase() + val.slice(1).toLowerCase()
+        set: (val) => val.toLowerCase().split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")
     },
 
     last_name: {
         type: String,
         maxLength: [30, 'last name is too long'],
         default: "",
-        set: (val) => val.charAt(0).toUpperCase() + val.slice(1).toLowerCase()
+        set: (val) => val.toLowerCase().split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")
     },
 
     bio: {
@@ -81,7 +81,7 @@ const userSchema = new mongoose.Schema({
 
 // password hashing before saving it to the database
 userSchema.pre("save", async function () {
-    if(!this.isModified("password")){
+    if (!this.isModified("password")) {
         return;
     }
 
