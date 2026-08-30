@@ -168,4 +168,76 @@ const uploadCoverPic = async (req, res) => {
     }
 }
 
-export default { userProfile, updateProfile, uploadProfilePic, uploadCoverPic };
+
+// PATCH /api/users/me/password
+const changePassword = async (req, res) => {
+    try {
+
+        // fetch old_password, new_password, confirm_password
+        const { old_password, new_password, confirm_password } = req.body;
+
+        // if credentials are blank
+        if (!old_password || !new_password || !confirm_password) {
+            return res.status(400).json({
+                message: "credentials may be empty"
+            })
+        }
+
+        // find user by id and select password
+        const foundUser = await userModel.findById(req.user.id).select("+password");
+
+        // if user not found
+        if (!foundUser) {
+            return res.status(404).json({
+                message: "user not found"
+            })
+        }
+
+        // checking if old password is matched or not
+        const isMatched = await foundUser.comparePassword(old_password);
+
+        // if old password not matched
+        if (!isMatched) {
+            return res.status(401).json({
+                message: "old password is invalid"
+            })
+        }
+
+        // check if new password is same as old password
+        const isNewPasswordSame = await foundUser.comparePassword(new_password);
+
+        // if same return
+        if (isNewPasswordSame) {
+            return res.status(400).json({
+                message: "new password is same as old one"
+            })
+        }
+
+        // if confirm password and new password entry are not same
+        if (new_password !== confirm_password) {
+            return res.status(401).json({
+                message: "incorrect password confirmation"
+            })
+        }
+
+        // using save() instead of update to trigger the schema bcrypt hashing
+        foundUser.password = new_password;
+        await foundUser.save();
+
+        // return success message
+        return res.status(201).json({
+            message: "password updated successfully"
+        })
+
+    } catch (error) {
+        console.log(error);
+
+        // fallback error handling
+        return res.status(500).json({
+            message: "something went wrong in password change",
+            error: error.message
+        })
+    }
+}
+
+export default { userProfile, updateProfile, uploadProfilePic, uploadCoverPic, changePassword };

@@ -26,4 +26,7 @@ router.post('/me/upload-avatar', authMiddleware.verifyToken, upload.single('avat
 // POST -- upload cover picture
 router.post('/me/upload-cover', authMiddleware.verifyToken, upload.single('cover'), profileController.uploadCoverPic);
 
+// PATCH -- update user password
+router.patch('/me/password', authMiddleware.verifyToken, profileController.changePassword);
+
 export default router;
