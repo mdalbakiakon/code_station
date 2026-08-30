@@ -1,37 +1,40 @@
+import jwt from "jsonwebtoken";
+import blacklistModel from "../models/blacklist.model.js";
+
 
 // user input for register and login validation middleware
-const authInputValidation = async (req, res, next) => {
+const inputValidation = async (req, res, next) => {
     try {
 
         // user input values
-        const {identifier, password} = req.body;
+        const { identifier, password } = req.body;
 
         // role based req handle
-        if(req.body.role === "instructor"){
+        if (req.body.role === "instructor") {
             req.role = "instructor";
-        }else{
+        } else {
             req.role = "student";
         }
 
         // if user gives null empty undefined input value
-        if(!identifier || !password){
+        if (!identifier || !password) {
             return res.status(400).json({
                 message: "credentials can't be empty"
             });
         }
 
         // handling edge case if identifier input from user like "       "
-        if(identifier.trim() === ""){
+        if (identifier.trim() === "") {
             return res.status(400).json({
                 message: "identifier can't be empty"
             });
         }
 
         // checking the identifier is email or username based
-        if(identifier.includes('@')){
+        if (identifier.includes('@')) {
             req.identifierType = 'email';
             req.email = identifier.trim();
-        }else{
+        } else {
             req.identifierType = 'username';
             req.username = identifier.trim();
         }
@@ -39,7 +42,7 @@ const authInputValidation = async (req, res, next) => {
         // taking password into req.password to pass next
         req.password = password;
         next();
-        
+
     } catch (error) {
         console.log(error);
 
@@ -51,4 +54,68 @@ const authInputValidation = async (req, res, next) => {
     }
 }
 
-export default {authInputValidation};
+
+
+
+// verify user token and check in blacklist
+const verifyToken = async (req, res, next) => {
+    try {
+
+        // fetch client side token
+        const foundToken = req.cookies.CODE_STATION_TOKEN;
+
+        // if token not found
+        if (!foundToken) {
+            return res.status(401).json({
+                message: 'unauthorized user'
+            })
+        }
+
+        // if token found then verify it
+        const decoded = jwt.verify(foundToken, process.env.JWT_SECRET);
+
+        // if founded token is in blacklist
+        const inBlacklist = Boolean(await blacklistModel.exists({
+            jti: decoded.jti
+        }));
+
+        // if it is in blackList
+        if (inBlacklist) {
+            return res.status(401).json({
+                message: 'session expired'
+            })
+        };
+
+        // if not in blacklist and jwt.verify also throw no error
+        req.user = {
+            id: decoded.id,
+            role: decoded.role,
+            jti: decoded.jti,
+            exp: decoded.exp
+        }
+
+        // downstream data;
+        next();
+
+    } catch (error) {
+        console.log(error);
+
+        // if decoded was malformed or expired
+        if (error.name === "JsonWebTokenError" || error.name === "TokenExpiredError") {
+            return res.status(401).json({
+                message: "token was malformed or expired"
+            })
+        }
+
+        // fallback error handling
+        return res.status(500).json({
+            message: "something went wrong in token verification",
+            error: error.message
+        })
+    }
+}
+
+
+
+
+export default { inputValidation, verifyToken };

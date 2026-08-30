@@ -1,4 +1,4 @@
-import tokenBlacklistModel from "../models/tokenBlacklist.model.js";
+import blacklistModel from "../models/blacklist.model.js";
 import userModel from "../models/user.model.js";
 import authUtil from "../utils/auth.util.js";
 
@@ -14,7 +14,7 @@ const registerUser = async (req, res) => {
         }
 
         // user input from middleware
-        const {email, password, role} = req;
+        const { email, password, role } = req;
 
 
         // checking if exist user
@@ -72,24 +72,24 @@ const loginUser = async (req, res) => {
     try {
 
         // from middleware
-        const {email, username, password, identifierType} = req
+        const { email, username, password, identifierType } = req
 
         // var declaration for global scope
         let foundUser;
 
         // search based on identifier type
-        if(identifierType === 'email'){
+        if (identifierType === 'email') {
             foundUser = await userModel.findOne({
                 email: email
             }).select("+password")
-        }else{
+        } else {
             foundUser = await userModel.findOne({
                 username: username
             }).select("+password")
         }
 
         // if there is no user found
-        if(!foundUser){
+        if (!foundUser) {
             return res.status(401).json({
                 message: "no user found"
             })
@@ -99,7 +99,7 @@ const loginUser = async (req, res) => {
         const isPasswordValid = await foundUser.comparePassword(password);
 
         // if password did not match
-        if(!isPasswordValid){
+        if (!isPasswordValid) {
             return res.status(401).json({
                 message: "wrong password encountered"
             })
@@ -107,10 +107,10 @@ const loginUser = async (req, res) => {
 
         // generating jwt token
         const token = authUtil.generateToken(foundUser);
-        
+
         // saving token in cookie
         authUtil.setAuthCookie(res, token);
-        
+
         // final success message
         return res.status(200).json({
             message: "user login successful"
@@ -128,26 +128,26 @@ const loginUser = async (req, res) => {
 }
 
 
-// POST -- /api/auth/login
+// POST -- /api/auth/logout
 const logoutUser = async (req, res) => {
     try {
 
-        // add in blacklist
-        await tokenBlacklistModel.create({
-            jti: req.user.token_jti,
-            expiresAt: new Date(req.user.token_exp * 1000)
-        });
+        // inster the tokens jti and exp data to blacklist collection
+        await blacklistModel.create({
+            jti: req.user.jti,
+            expiresAt: new Date(req.user.exp * 1000)
+        })
 
-        // delete from client end
+        // clearing cookie from client side
         res.clearCookie("CODE_STATION_TOKEN", {
             httpOnly: true,
             sameSite: 'strict',
             secure: process.env.NODE_ENV === "production"
-        });
+        })
 
-        // retrurn success message
+        // success message
         return res.status(200).json({
-            message: 'user logout successful'
+            message: "user logout successful"
         })
 
     } catch (error) {
@@ -155,7 +155,7 @@ const logoutUser = async (req, res) => {
 
         // fallback error handling
         return res.status(500).json({
-            message: 'something went wrong in user logout',
+            message: "something went wrong in user logout",
             error: error.message
         })
     }

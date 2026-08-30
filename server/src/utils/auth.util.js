@@ -7,17 +7,22 @@ const generateToken = (user) => {
         id: user._id,
         role: user.role,
         jti: crypto.randomUUID()
-    }, process.env.JWT_SECRET, { expiresIn: '1d' });
-}
+    },
+        process.env.JWT_SECRET,
+        { expiresIn: "1d" });
+};
 
 // setting cookie in client end
 const setAuthCookie = (res, token) => {
-    res.cookie("CODE_STATION_TOKEN", token, {
-        httpOnly: true,
-        sameSite: 'strict',
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 24 * 60 * 60 * 1000
-    })
-}
+    res.cookie("CODE_STATION_TOKEN",
+        token,
+        {
+            httpOnly: true,
+            sameSite: 'strict',
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 24 * 60 * 60 * 1000
+        }
+    )
+};
 
 export default { generateToken, setAuthCookie };
