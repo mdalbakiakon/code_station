@@ -161,4 +161,5 @@ const logoutUser = async (req, res) => {
     }
 }
 
+
 export default { registerUser, loginUser, logoutUser };
