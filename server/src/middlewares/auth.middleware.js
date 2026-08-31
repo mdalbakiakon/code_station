@@ -7,14 +7,16 @@ const inputValidation = async (req, res, next) => {
     try {
 
         // user input values
-        const { identifier, password } = req.body;
+        const { identifier, password, role } = req.body;
 
         // role based req handle
-        if (req.body.role === "instructor") {
-            req.role = "instructor";
-        } else {
-            req.role = "student";
-        }
+        // if the role is not given
+        if (!req.body.role) {
+            req.role = "student"
+        };
+
+        // if given from the client input
+        req.role = role;
 
         // if user gives null empty undefined input value
         if (!identifier || !password) {
@@ -53,8 +55,6 @@ const inputValidation = async (req, res, next) => {
         })
     }
 }
-
-
 
 
 // verify user token and check in blacklist
@@ -116,6 +116,28 @@ const verifyToken = async (req, res, next) => {
 }
 
 
+// verify if user is admin or not
+const authAdmin = async (req, res, next) => {
+    try {
+        // giving permission only to admin
+        if (req.user.role !== "admin") {
+            return res.status(403).json({
+                message: "user has no permission to proceed"
+            })
+        }
+
+        // downstream flow
+        next();
+
+    } catch (error) {
+        console.log(error);
+
+        return res.status(500).json({
+            message: "something went wrong in authenticating admin",
+            error: error.message
+        })
+    }
+}
 
 
-export default { inputValidation, verifyToken };
+export default { inputValidation, verifyToken, authAdmin };

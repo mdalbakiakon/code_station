@@ -1,14 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-
-
-// convert each word into capitalize
-const handleTitleCase = (val) => {
-    return val.toLowerCase()
-        .split(" ")
-        .map((word)=>word.charAt(0).toUpperCase()+word.slice(1))
-        .join(" ");
-}
+import handleTitleCase from "../utils/handleTitleCase.util.js";
 
 
 // user schema
