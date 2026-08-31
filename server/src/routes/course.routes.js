@@ -12,6 +12,8 @@ const upload = multer({
     limits: { fileSize: 5 * 1024 * 1024 } // 5mb max
 });
 
+const lessonUpload = multer({storage: multer.memoryStorage()});
+
 // create course only by admin
 router.post('/', authMiddleware.verifyToken, authMiddleware.authAdmin, upload.single("thumbnail"), courseController.createCourse);
 
@@ -19,10 +21,10 @@ router.post('/', authMiddleware.verifyToken, authMiddleware.authAdmin, upload.si
 router.get('/', authMiddleware.verifyToken, courseController.getAllCourses);
 
 // get all lessons belonging to a specific course
-router.get('/:courseId', authMiddleware.verifyToken, courseController.getAllLessonsOfCourse);
+router.get('/:courseId', authMiddleware.verifyToken, lessonController.getAllLessonsOfCourse);
 
 // creat lesson by assigned instructor only
-router.post('/:courseId', authMiddleware.verifyToken, authMiddleware.authInstructor, courseMiddleware.isCourseInstructor, upload.fields([
+router.post('/:courseId', authMiddleware.verifyToken, authMiddleware.authInstructor, courseMiddleware.isCourseInstructor, lessonUpload.fields([
     {name: 'content', maxCount: 1},
     {name: 'video', maxCount: 1}
 ]), lessonController.createLesson);

@@ -108,7 +108,9 @@ const uploadProfilePic = async (req, res) => {
 
         // if success if error it will go catch block anyway
         const updatedProfile = await userModel.findByIdAndUpdate(req.user.id, {
-            "profile_img": cloudResponse.secure_url
+            "profile_img": cloudResponse.secure_url,
+            "profile_public_id": cloudResponse.public_id,
+            "profile_resource_type": cloudResponse.resource_type,
         }, { returnDocument: 'after', runValidators: true })
 
         // success response
@@ -148,7 +150,9 @@ const uploadCoverPic = async (req, res) => {
 
         // if success if error it will go catch block anyway
         const updatedProfile = await userModel.findByIdAndUpdate(req.user.id, {
-            "cover_img": cloudResponse.secure_url
+            "cover_img": cloudResponse.secure_url,
+            "cover_public_id": cloudResponse.public_id,
+            "cover_resource_type": cloudResponse.resource_type
         }, { returnDocument: 'after', runValidators: true })
 
         // success response
@@ -239,5 +243,6 @@ const changePassword = async (req, res) => {
         })
     }
 }
+
 
 export default { userProfile, updateProfile, uploadProfilePic, uploadCoverPic, changePassword };

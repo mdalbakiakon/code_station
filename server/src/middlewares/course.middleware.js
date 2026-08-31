@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import courseModel from "../models/course.model.js";
 
 // check if the instructor is assigned in the particular course or not to give permission in lesson editing

@@ -37,7 +37,7 @@ const cloudUpload = async (buffer, mimetype, folder, userId) => {
 
     const uploadResult = await cloudinary.uploader
         .upload(data, {
-            folder: `code_station/${folder}_images`,
+            folder: `code_station/${folder}_folder`,
             public_id: flag ? `${folder}_${userId}` : `${folder}_${userId}_${crypto.randomUUID()}`,
             resource_type: 'auto',
             overwrite: flag,

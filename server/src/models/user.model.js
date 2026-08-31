@@ -65,14 +65,32 @@ const userSchema = new mongoose.Schema({
         match: [/^https?:\/\/\S+$/, 'url is invalid'],
         default: ""
     },
-
+    profile_public_id: {
+        type: String,
+        trim: true,
+        default: ""
+    },
+    profile_resource_type: {
+        type: String,
+        trim: true,
+        default: ""
+    },
     cover_img: {
         type: String,
         trim: true,
         match: [/^https?:\/\/\S+$/, 'url is invalid'],
         default: ""
     },
-
+    cover_public_id: {
+        type: String,
+        trim: true,
+        default: ""
+    },
+    cover_resource_type: {
+        type: String,
+        trim: true,
+        default: ""
+    },
     isActive: {
         type: Boolean,
         default: true

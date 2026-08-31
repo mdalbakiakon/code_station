@@ -12,7 +12,7 @@ const blacklistSchema = new mongoose.Schema({
     }
 });
 
-
+// expire token as it expires
 blacklistSchema.index({expiresAt: 1}, {expireAfterSeconds: 0});
 
 const blacklistModel = mongoose.model("blacklists", blacklistSchema);
