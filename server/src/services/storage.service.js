@@ -55,7 +55,14 @@ const cloudUpload = async (buffer, mimetype, folder, userId) => {
 
 // delete file from cloud
 const cloudDelete = async (public_id, resource_type) => {
-    const deleteResult = await cloudinary.uploader
+    
+    cloudinary.config({
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET
+    });
+
+    await cloudinary.uploader
         .destroy(public_id, {
             resource_type: resource_type,
             invalidate: true
@@ -64,8 +71,6 @@ const cloudDelete = async (public_id, resource_type) => {
             console.log('failed deleting from cloud.\n');
             console.log(error.message);
         })
-
-    console.log(deleteResult);
 }
 
 export { cloudUpload, cloudDelete };

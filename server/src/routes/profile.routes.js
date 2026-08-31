@@ -29,4 +29,7 @@ router.post('/me/upload-cover', authMiddleware.verifyToken, upload.single('cover
 // PATCH -- update user password
 router.patch('/me/password', authMiddleware.verifyToken, profileController.changePassword);
 
+// DELETE -- delete user profile
+router.delete('/me/delete-profile', authMiddleware.verifyToken, profileController.deleteProfile)
+
 export default router;

@@ -1,5 +1,6 @@
+import blacklistModel from "../models/blacklist.model.js";
 import userModel from "../models/user.model.js";
-import { cloudUpload } from "../services/storage.service.js";
+import { cloudDelete, cloudUpload } from "../services/storage.service.js";
 
 // GET /api/users/me -- to get user profile data
 const userProfile = async (req, res) => {
@@ -245,4 +246,53 @@ const changePassword = async (req, res) => {
 }
 
 
-export default { userProfile, updateProfile, uploadProfilePic, uploadCoverPic, changePassword };
+// DELETE /api/users/me/delete-profile
+const deleteProfile = async (req, res) => {
+    try {
+        const deletedUser = await userModel.findOneAndDelete({
+            _id: req.user.id
+        });
+
+        if (!deletedUser) {
+            return res.status(404).json({
+                message: "user not found"
+            });
+        }
+
+        // delete user resources in cloud
+        if (deletedUser.profile_img) {
+            // delete user profile picture
+            await cloudDelete(deletedUser.profile_public_id, deletedUser.profile_resource_type);
+        }
+
+        if (deletedUser.cover_img) {
+            // delete user profile picture
+            await cloudDelete(deletedUser.cover_public_id, deletedUser.cover_resource_type);
+        }
+
+        // only blacklist + clear cookie AFTER confirming deletion succeeded
+        await blacklistModel.create({
+            jti: req.user.jti,
+            expiresAt: new Date(req.user.exp * 1000)
+        });
+
+        res.clearCookie("CODE_STATION_TOKEN", {
+            httpOnly: true,
+            sameSite: 'strict',
+            secure: process.env.NODE_ENV === "production"
+        });
+
+        return res.status(200).json({
+            message: 'account deleted successfully'
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: "something went wrong in deleting user account"
+        });
+    }
+};
+
+
+export default { userProfile, updateProfile, uploadProfilePic, uploadCoverPic, changePassword, deleteProfile };
