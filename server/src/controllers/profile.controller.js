@@ -1,5 +1,5 @@
 import userModel from "../models/user.model.js";
-import cloudUpload from "../services/storage.service.js";
+import { cloudUpload } from "../services/storage.service.js";
 
 // GET /api/users/me -- to get user profile data
 const userProfile = async (req, res) => {

@@ -25,6 +25,16 @@ const courseSchema = new mongoose.Schema({
         required: [true, "course thumbnail is required"],
         trim: true
     },
+    thumbnail_public_id:{
+        type: String,
+        trim: true,
+        default: ""
+    },
+    thumbnail_resource_type:{
+        type: String,
+        trim: true,
+        default: ""
+    },
     level: {
         type: String,
         enum: ["beginner", "intermediate", "advanced"],

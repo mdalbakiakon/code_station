@@ -2,6 +2,9 @@ import express from "express";
 import authMiddleware from "../middlewares/auth.middleware.js";
 import courseController from "../controllers/course.controller.js";
 import multer from "multer";
+import authController from "../controllers/auth.controller.js";
+import courseMiddleware from "../middlewares/course.middleware.js";
+import lessonController from "../controllers/lesson.controller.js";
 
 const router = express.Router();
 const upload = multer({
@@ -14,5 +17,15 @@ router.post('/', authMiddleware.verifyToken, authMiddleware.authAdmin, upload.si
 
 // get all courses with two separate array as upcoming and ongoing
 router.get('/', authMiddleware.verifyToken, courseController.getAllCourses);
+
+// get all lessons belonging to a specific course
+router.get('/:courseId', authMiddleware.verifyToken, courseController.getAllLessonsOfCourse);
+
+// creat lesson by assigned instructor only
+router.post('/:courseId', authMiddleware.verifyToken, authMiddleware.authInstructor, courseMiddleware.isCourseInstructor, upload.fields([
+    {name: 'content', maxCount: 1},
+    {name: 'video', maxCount: 1}
+]), lessonController.createLesson);
+
 
 export default router;

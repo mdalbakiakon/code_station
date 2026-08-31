@@ -140,4 +140,28 @@ const authAdmin = async (req, res, next) => {
 }
 
 
-export default { inputValidation, verifyToken, authAdmin };
+// verify if user is instructor or not
+const authInstructor = async (req, res, next) => {
+    try {
+        // giving permission only to admin
+        if (req.user.role !== "instructor") {
+            return res.status(403).json({
+                message: "user has no permission to proceed"
+            })
+        }
+
+        // downstream flow
+        next();
+
+    } catch (error) {
+        console.log(error);
+
+        return res.status(500).json({
+            message: "something went wrong in authenticating instructor",
+            error: error.message
+        })
+    }
+}
+
+
+export default { inputValidation, verifyToken, authAdmin, authInstructor };
