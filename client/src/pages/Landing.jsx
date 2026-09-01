@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import LandingNav from "../components/LandingNav";
 
 // Initial list of skills to be displayed in the rotating carousel.
 // The order here determines which skill starts centered (see MIDDLE_INDEX).
@@ -39,7 +40,7 @@ function getItemStyle(index) {
   // The centered item: fully visible, larger, bold, and accent-colored.
   if (distance === 0) {
     opacity = 1;
-    color = "#974759";
+    color = "#9b5a50";
     fontSize = "1.5rem";
     fontWeight = "bold";
   } else if (distance === 1) {
@@ -83,75 +84,89 @@ const Landing = () => {
   }, []);
 
   return (
-    <section className="relative flex flex-col justify-center items-center font-ex p-5">
-      {/* landing hero image */}
-      <img
-        src="./hero.webp"
-        alt="code-station-landing-page"
-        className="w-full h-svh object-cover object-center absolute top-0 left-0 z-0 select-none"
-      />
+    <>
+      <LandingNav />
+      <section className="relative flex flex-col justify-center items-center font-ex p-5">
+        {/* landing hero image */}
+        <img
+          src="./hero.webp"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+          alt="code-station-landing-page"
+          className="w-full h-svh object-cover object-center absolute top-0 left-0 z-0 select-none"
+        />
 
-      {/* improve ux by adding a transparent div so no one can select and drag hero image */}
-      <div className="w-full h-svh bg-transparent absolute top-0 left-0 z-10"></div>
+        {/* improve ux by adding a transparent div so no one can select and drag hero image */}
+        <div className="w-full h-svh bg-transparent absolute top-0 left-0 z-10"></div>
 
-      <div className="w-full max-w-5xl mx-auto relative z-20 flex flex-col md:flex-row justify-between items-center gap-5 h-full text-[#f5f5f5]">
+        <div className="w-full max-w-5xl mx-auto relative z-20 flex flex-col md:flex-row justify-between items-center gap-5 h-full text-[#f5f5f5]">
+          <div className="flex-1 select-none flex flex-col justify-start md:justify-between items-start gap-15">
+            {/* landing hero text */}
+            <div>
+              {/* headings */}
+              <h1 className="text-6xl leading-none tracking-tighter font-ex">
+                One Station
+                <br />
+                to direct your career.
+              </h1>
 
-        <div className="flex-1 select-none flex flex-col justify-start md:justify-between items-start gap-15">
-          {/* landing hero text */}
-          <div>
-            {/* headings */}
-            <h1 className="text-6xl leading-none tracking-tighter font-ex">
-              One Station
-              <br />
-              to direct your career.
-            </h1>
-
-            {/* subheadings */}
-            <p className="font-lt text-2xl tracking-tighter leading-none mt-7.5 opacity-75">
-              Skip the trials and errors. Learn directly from professionals who've
-              built the career you've dreamt about.
-            </p>
-          </div>
-
-          {/* call-to-action buttons */}
-          <div className="flex justify-center items-center font-lt gap-3.5">
-            <button className="bg-[#f5f5f5] text-[#111] px-5 py-1.5 rounded-lg cursor-pointer text-lg border border-[#f5f5f5]">Explore</button>
-            <button className="px-5 py-1.5 rounded-lg cursor-pointer text-lg border border-[#f5f5f5] hover:bg-white/5">Why us?</button>
-          </div>
-        </div>
-
-        {/* rotating skills carousel */}
-        <div className="w-full md:w-2/5 h-fit rounded-4xl relative p-0.5 overflow-hidden">
-          <div
-            className="relative w-full p-0.5 select-none"
-            style={{ height: 210 }}
-          >
-            {/* render each skill with its computed position/opacity style */}
-            {skills.map((skill, index) => (
-              <p
-                key={skill}
-                className="absolute right-5 w-full text-right whitespace-nowrap transition-all duration-600 ease-out"
-                style={getItemStyle(index)}
-              >
-                {skill}
+              {/* subheadings */}
+              <p className="font-lt text-2xl tracking-tighter leading-none mt-7.5 opacity-75">
+                Skip the trials and errors. Learn directly from professionals
+                who've built the career you've dreamt about.
               </p>
-            ))}
+            </div>
 
-            {/* pointer/arrow indicator marking the centered skill */}
-            <div className="absolute right-0 top-1/2 -translate-y-1/2">
-              <svg
-                width="15"
-                height="15"
-                viewBox="0 0 24 24"
-                style={{ transform: "scaleX(-1)" }}
-              >
-                <polygon points="4,2 22,12 4,22" fill="#974759"></polygon>
-              </svg>
+            {/* call-to-action buttons */}
+            <div className="flex justify-center items-center font-lt gap-3.5">
+              <button className="bg-[#f5f5f5] text-[#111] px-5 py-1.5 rounded-lg cursor-pointer text-lg border border-[#f5f5f5]">
+                Explore
+              </button>
+              <button className="px-5 py-1.5 rounded-lg cursor-pointer text-lg border border-[#f5f5f5] hover:bg-white/5">
+                Why us?
+              </button>
+            </div>
+          </div>
+
+          {/* rotating skills carousel */}
+          <div className="w-full md:w-2/5 h-fit rounded-4xl relative p-0.5 overflow-hidden">
+            <div
+              className="relative w-full p-0.5 select-none"
+              style={{ height: 210 }}
+            >
+              {/* render each skill with its computed position/opacity style */}
+              {skills.map((skill, index) => (
+                <p
+                  key={skill}
+                  className="absolute right-5 w-full text-right whitespace-nowrap transition-all duration-600 ease-out"
+                  style={getItemStyle(index)}
+                >
+                  {skill}
+                </p>
+              ))}
+
+              {/* pointer/arrow indicator marking the centered skill */}
+              <div className="absolute right-0 top-1/2 -translate-y-1/2">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  style={{ transform: "scaleX(-1)" }}
+                >
+                  <polygon points="4,2 22,12 4,22" fill="#9b5a50"></polygon>
+                </svg>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+
+      <section></section>
+      <section></section>
+      <section></section>
+    </>
   );
 };
 
