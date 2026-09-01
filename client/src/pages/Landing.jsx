@@ -52,14 +52,14 @@ function getItemStyle(index) {
   }
 
   return {
-    top: "48.5%",
+    top: "49%",
     // Combine the vertical offset with a base centering transform.
     transform: `translateY(${offset}px) translateY(-50%)`,
     opacity,
     color,
     fontSize,
     fontWeight,
-    lineHeight: 1,
+    lineHeight: 0,
   };
 }
 
@@ -86,7 +86,7 @@ const Landing = () => {
   return (
     <>
       <LandingNav />
-      <section className="relative flex flex-col justify-center items-center font-ex p-5">
+      <section className="relative flex flex-col justify-center items-center font-ex p-2.5 md:p-5 h-svh">
         {/* landing hero image */}
         <img
           src="./hero.webp"
@@ -100,30 +100,31 @@ const Landing = () => {
         {/* improve ux by adding a transparent div so no one can select and drag hero image */}
         <div className="w-full h-svh bg-transparent absolute top-0 left-0 z-10"></div>
 
-        <div className="w-full max-w-5xl mx-auto relative z-20 flex flex-col md:flex-row justify-between items-center gap-5 h-full text-[#f5f5f5]">
-          <div className="flex-1 select-none flex flex-col justify-start md:justify-between items-start gap-15">
+        <div className="w-full max-w-5xl mx-auto relative z-20 flex flex-col md:flex-row justify-between mb-5 md:justify-between items-center gap-2.5 md:gap-5 h-full text-[#f5f5f5]">
+          
+          <div className="md:flex-1 select-none flex flex-col justify-start md:justify-between items-start gap-5 md:gap-15">
             {/* landing hero text */}
             <div>
               {/* headings */}
-              <h1 className="text-6xl leading-none tracking-tighter font-ex">
+              <h1 className="text-3xl md:text-6xl leading-none tracking-tighter font-ex">
                 One Station
                 <br />
                 to direct your career.
               </h1>
 
               {/* subheadings */}
-              <p className="font-lt text-2xl tracking-tighter leading-none mt-7.5 opacity-75">
+              <p className="font-lt text-base md:text-2xl tracking-tighter leading-none mt-2.5 md:mt-7.5 opacity-75">
                 Skip the trials and errors. Learn directly from professionals
                 who've built the career you've dreamt about.
               </p>
             </div>
 
             {/* call-to-action buttons */}
-            <div className="flex justify-center items-center font-lt gap-3.5">
-              <button className="bg-[#f5f5f5] text-[#111] px-5 py-1.5 rounded-lg cursor-pointer text-lg border border-[#f5f5f5]">
+            <div className="flex justify-center items-center font-lt gap-2 md:gap-3.5">
+              <button className="bg-[#f5f5f5] text-[#111] px-5 py-1.5 rounded-lg cursor-pointer text-sm md:text-lg border border-[#f5f5f5]">
                 Explore
               </button>
-              <button className="px-5 py-1.5 rounded-lg cursor-pointer text-lg border border-[#f5f5f5] hover:bg-white/5">
+              <button className="px-5 py-1.5 rounded-lg cursor-pointer text-sm md:text-lg border border-[#f5f5f5] hover:bg-white/5">
                 Why us?
               </button>
             </div>
@@ -131,15 +132,12 @@ const Landing = () => {
 
           {/* rotating skills carousel */}
           <div className="w-full md:w-2/5 h-fit rounded-4xl relative p-0.5 overflow-hidden">
-            <div
-              className="relative w-full p-0.5 select-none"
-              style={{ height: 210 }}
-            >
+            <div className="relative w-full p-0.5 select-none h-45 md:h-52.5">
               {/* render each skill with its computed position/opacity style */}
               {skills.map((skill, index) => (
                 <p
                   key={skill}
-                  className="absolute right-5 w-full text-right whitespace-nowrap transition-all duration-600 ease-out"
+                  className="absolute right-5 w-full text-right whitespace-nowrap transition-all duration-600 ease-out scale-75 md:scale-100 origin-right"
                   style={getItemStyle(index)}
                 >
                   {skill}
@@ -147,7 +145,7 @@ const Landing = () => {
               ))}
 
               {/* pointer/arrow indicator marking the centered skill */}
-              <div className="absolute right-0 top-1/2 -translate-y-1/2">
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 scale-75 md:scale-100">
                 <svg
                   width="15"
                   height="15"
@@ -160,8 +158,11 @@ const Landing = () => {
             </div>
           </div>
         </div>
-      </section>
 
+        <div className="absolute left-1/2 -translate-x-1/2  bottom-2.5 md:bottom-5 font-lt text-[8px] md:text-sm z-20 text-[#f5f5f5] opacity-70 text-center w-full">
+          Trusted by 100K+ learners, professionals, and enterprises alike
+        </div>
+      </section>
 
       <section></section>
       <section></section>
