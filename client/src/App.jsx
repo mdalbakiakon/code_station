@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import AllRoutes from "./components/AllRoutes";
 
 const App = () => {
   return (
-    <div>App</div>
-  )
-}
+    <>
+      {/* all routes */}
+      <AllRoutes />
+    </>
+  );
+};
 
-export default App
+export default App;

@@ -1,1 +1,28 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+
+/* custom fonts */
+@font-face {
+  font-family: "anodina-light";
+  src: url("/fonts/Anodina-Light.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "anodina-extrabold";
+  src: url("/fonts/Anodina-ExtraBold.woff2") format("woff2");
+}
+
+/* access from tailwind*/
+@theme {
+  --font-lt: "anodina-light";
+  --font-ex: "anodina-extrabold";
+}
+
+body {
+  width: 100%;
+}
+
+/* page min-h-100svh */
+section {
+  width: 100%;
+  min-height: 100svh;
+}
