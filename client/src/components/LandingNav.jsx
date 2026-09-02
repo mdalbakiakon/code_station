@@ -11,31 +11,31 @@ const LandingNav = () => {
       <nav className="hidden md:flex justify-center items-center font-lt gap-7.5">
         <NavLink
           to="/"
-          className={({ isActive }) => (isActive ? "text-accent font-ex" : "")}
+          className={({ isActive }) => (isActive ? "text-[#707070] font-ex" : "")}
         >
           Home
         </NavLink>
         <NavLink
           to="/courses"
-          className={({ isActive }) => (isActive ? "text-accent font-ex" : "")}
+          className={({ isActive }) => (isActive ? "text-[#707070] font-ex" : "")}
         >
           Courses
         </NavLink>
         <NavLink
           to="/instructors"
-          className={({ isActive }) => (isActive ? "text-accent font-ex" : "")}
+          className={({ isActive }) => (isActive ? "text-[#707070] font-ex" : "")}
         >
           Instructors
         </NavLink>
         <NavLink
           to="/testimonials"
-          className={({ isActive }) => (isActive ? "text-accent font-ex" : "")}
+          className={({ isActive }) => (isActive ? "text-[#707070] font-ex" : "")}
         >
           Testimonials
         </NavLink>
       </nav>
 
-      <button className="h-full px-4.5 rounded-lg bg-[#f5f5f5] text-[#111] font-ex hidden md:flex justify-center items-center leading-0">
+      <button className="h-full px-4.5 rounded-lg bg-[#f5f5f5] text-[#111] font-ex hidden md:flex justify-center items-center leading-0 cursor-pointer">
         Signup
       </button>
 

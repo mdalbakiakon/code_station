@@ -11,15 +11,22 @@
   src: url("/fonts/Anodina-ExtraBold.woff2") format("woff2");
 }
 
+@font-face {
+  font-family: "anodina-regular";
+  src: url("/fonts/Anodina-Regular.woff2") format("woff2");
+}
+
 /* access from tailwind*/
 @theme {
   --font-lt: "anodina-light";
   --font-ex: "anodina-extrabold";
+  --font-rg: "anodina-regular";
   --color-accent: #9b5a50;
 }
 
 body {
   width: 100%;
+  background-color: black;
 }
 
 /* page min-h-100svh */
