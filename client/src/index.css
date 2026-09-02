@@ -21,12 +21,26 @@
   --font-lt: "anodina-light";
   --font-ex: "anodina-extrabold";
   --font-rg: "anodina-regular";
-  --color-accent: #9b5a50;
+}
+
+
+:root {
+  --land-bg-main: #000000;
+  --land-txt-main: #f5f5f5;
+  --land-txt-sec: #707070;
+  --land-accent: #9b5a50;
+  --land-txt-sub: #d3d3d3;
+  --land-txt-inverse: #000000;
+}
+
+
+.hide-scrollbar::-webkit-scrollbar{
+  display: none;
 }
 
 body {
   width: 100%;
-  background-color: black;
+  background-color: var(--land-bg-main);
 }
 
 /* page min-h-100svh */
