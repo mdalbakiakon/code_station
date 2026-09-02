@@ -16,16 +16,15 @@ const tabs = [
   "More",
 ];
 
-
 const PlatformSection = ({ index, distance, barClick }) => {
   return (
     <section className="p-2.5 md:p-5 w-full max-w-6xl mx-auto">
       <div className="mt-12.5 md:mt-25">
-        <h2 className="font-ex text-4xl font-black text-(--land-txt-main) tracking-tighter leading-none text-center">
+        <h2 className="font-ex text-3xl md:text-4xl font-black text-(--land-txt-main) tracking-tighter leading-none text-center">
           Zero <span className="text-(--land-txt-sec)">Hesitation</span> Hero
           Skills
         </h2>
-        <p className="text-center text-xl font-ex text-(--land-txt-main)/30 my-2.5 tracking-tighter leading-none">
+        <p className="text-center text-base md:text-xl font-ex text-(--land-txt-main)/30 mt-2.5 tracking-tighter leading-none">
           One platform to learn anything
         </p>
       </div>
@@ -47,7 +46,7 @@ const PlatformSection = ({ index, distance, barClick }) => {
         ))}
       </ul>
 
-      <div className="relative w-full aspect-4/5 min-[481px]:aspect-video rounded-[50px] overflow-hidden">
+      <div className="relative w-full aspect-4/5 md:aspect-video rounded-[50px] overflow-hidden">
         {isVideoFile(backgroundAssets[index].src) ? (
           <video
             key={backgroundAssets[index].src}
@@ -67,9 +66,9 @@ const PlatformSection = ({ index, distance, barClick }) => {
           />
         )}
 
-        <div className="w-full h-full bg-[linear-gradient(to_right,var(--land-bg-main)_0%,transparent_100%)] relative">
-          <div className="absolute w-full md:w-1/3 inset-10 font-ex text-(--land-txt-main) flex flex-col gap-7.5">
-            <div>
+        <div className="hidden md:flex w-full h-full bg-[linear-gradient(to_right,var(--land-bg-main)_0%,transparent_100%)] relative">
+          <div className="absolute w-2/3 md:w-1/3 inset-5 md:inset-10 font-ex text-(--land-txt-main) flex flex-col gap-7.5">
+            <div className="">
               <h2 className="text-3xl tracking-tighter leading-none">
                 {backgroundAssets[index].title}
               </h2>
@@ -89,6 +88,36 @@ const PlatformSection = ({ index, distance, barClick }) => {
                   ></span>
                 ))}
               </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+        <div className="md:hidden w-full h-full bg-[linear-gradient(to_right,var(--land-bg-main)_0%,transparent_100%)] relative">
+          <div className="absolute w-[calc(100%-40px)] inset-5 md:inset-10 font-ex text-(--land-txt-main) flex flex-col gap-8">
+            <div className="w-full flex-1 relative">
+              <div className="absolute top-2.5 bottom-0 flex flex-col gap-1.25">
+                {backgroundAssets.map((_, i) => (
+                  <span
+                    key={i}
+                    className={`h-6 w-1 transition-all duration-700 ease-out rounded-full bg-(--land-txt-sec)/30 ${
+                      index === i ? "bg-(--land-txt-main)! h-10.5" : ""
+                    }`}
+                  ></span>
+                ))}
+              </div>
+            </div>
+
+            <div className="w-2/3">
+              <h2 className="text-2xl tracking-tighter leading-none">
+                {backgroundAssets[index].title}
+              </h2>
+              <p className="text-(--land-txt-sec) text-[14px] leading-none tracking-tighter mt-2.5 line-clamp-2">
+                {backgroundAssets[index].description}
+              </p>
             </div>
           </div>
         </div>
