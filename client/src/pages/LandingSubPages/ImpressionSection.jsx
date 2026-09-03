@@ -2,8 +2,12 @@ import React from "react";
 
 const ImpressionSection = () => {
   return (
-    <section>
-      <div className="w-full h-fit flex justify-center items-center gap-1 p-2.5 my-47">
+    <section className="relative">
+      <h2 className="text-transparent absolute top-12.5 left-1/2 -translate-x-1/2 bg-clip-text font-ex leading-none text-[250px] w-full bg-[linear-gradient(to_bottom,#505050,transparent_95%)] text-center tracking-tighter">
+        inspiration
+      </h2>
+
+      <div className="w-full h-fit flex justify-center items-center gap-1 p-2.5 my-47 relative z-20">
         <div className="flex-1 flex flex-col rounded-[50px] bg-(--land-txt-main) aspect-square p-7.5 gap-7.5">
           <div>
             <h2 className="text-4xl font-lt leading-none tracking-tighter text-(--land-txt-sub)">
@@ -18,10 +22,7 @@ const ImpressionSection = () => {
             <div className="row-span-3  rounded-[50px] bg-(--land-txt-sub)/50"></div>
 
             <div className="col-span-2  rounded-[50px] bg-(--land-txt-sub) relative overflow-hidden p-7.5">
-
               <div className="absolute inset-0 w-full h-full bg-[conic-gradient(from_-90deg,#f48139,#e57549,#4b11cd,#f48139)] z-10 blur-lg scale-125"></div>
-
-              
 
               <h2 className="font-ex leading-none tracking-tighter text-(--land-txt-main) text-3xl relative z-30">
                 Your entire progress <br /> on one canvas
