@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import LandingNav from "../components/LandingNav";
 import HeroSection from "./LandingSubPages/HeroSection";
 import PlatformSection from "./LandingSubPages/PlatformSection";
+import ImpressionSection from "./LandingSubPages/ImpressionSection";
 
 
 const ITEM_WIDTH = 168;
@@ -21,6 +22,7 @@ const Landing = () => {
       <LandingNav />
       <HeroSection />
       <PlatformSection index={index} distance={distance} barClick={barClick} />
+      <ImpressionSection />
     </>
   );
 };

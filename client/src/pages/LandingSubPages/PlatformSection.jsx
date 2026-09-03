@@ -18,7 +18,7 @@ const tabs = [
 
 const PlatformSection = ({ index, distance, barClick }) => {
   return (
-    <section className="p-2.5 md:p-5 w-full max-w-6xl mx-auto">
+    <section className="p-2.5 md:p-5 w-full max-w-6xl mx-auto mb-47">
       <div className="mt-12.5 md:mt-25">
         <h2 className="font-ex text-3xl md:text-4xl font-black text-(--land-txt-main) tracking-tighter leading-none text-center">
           Zero <span className="text-(--land-txt-sec)">Hesitation</span> Hero
