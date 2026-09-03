@@ -1,14 +1,14 @@
-import { ReactLenis } from "lenis/react";
-import "lenis/dist/lenis.css";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import "lenis/dist/lenis.css";
 import "./index.css";
 import App from "./App.jsx";
+import SmoothScroll from "./components/SmoothScroll.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <ReactLenis root>
+    <SmoothScroll>
       <App />
-    </ReactLenis>
+    </SmoothScroll>
   </BrowserRouter>,
 );

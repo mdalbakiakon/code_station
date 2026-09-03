@@ -34,7 +34,7 @@ const HeroSection = () => {
               <span className="absolute inset-0 bg-[conic-gradient(from_-90deg,#f48139,#e57549,#4b11cd,#f48139)] z-10 blur-xs scale-125"></span>
               <span className="relative z-20 text-(--land-txt-main)">Explore</span>
             </button>
-            <button className="px-5 py-1.5 rounded-lg cursor-pointer text-sm md:text-lg border border-(--land-txt-sec)/50 hover:bg-white/5">
+            <button className="px-5 py-1.5 text-(--land-txt-main) rounded-lg cursor-pointer text-sm md:text-lg border border-transparent hover:bg-white/10 transition-all duration-500 ease-out">
               Why us?
             </button>
           </div>
