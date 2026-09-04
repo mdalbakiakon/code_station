@@ -1,50 +1,9 @@
 import { HiMenuAlt3 } from "react-icons/hi";
-import React, { useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const LandingNav = () => {
-  const navRef = useRef(null);
-  const isFirstUpdate = useRef(true);
-
-  useGSAP(() => {
-    const nav = navRef.current;
-
-    const showAnim = gsap
-      .from(nav, {
-        yPercent: -150,
-        paused: true,
-        duration: 0.5,
-        ease: "power2.out",
-      })
-      .progress(1);
-
-    ScrollTrigger.create({
-      start: "top top",
-      end: "max",
-      onUpdate: (self) => {
-        if (isFirstUpdate.current) {
-          isFirstUpdate.current = false;
-          return;
-        }
-        if (self.direction === 1 && self.scroll() > 100) {
-          showAnim.reverse();
-        } else {
-          showAnim.play();
-        }
-      },
-    });
-  }, []);
-
   return (
-    <header
-      ref={navRef}
-      className="w-[calc(100%-20px)] md:w-[calc(100%-40px)] max-w-7xl h-12 mx-auto bg-(--land-bg-main) rounded-xl p-1 flex justify-between items-center fixed top-5 left-1/2 -translate-x-1/2 z-50 text-(--land-txt-main) leading-none tracking-tighter"
-    >
+    <header className="w-[calc(100%-20px)] md:w-[calc(100%-40px)] max-w-7xl h-12 mx-auto bg-(--land-bg-main) rounded-xl p-1 flex justify-between items-center fixed top-5 left-1/2 -translate-x-1/2 z-50 text-(--land-txt-main) leading-none tracking-tighter">
       <span className="text-lg md:text-xl font-ex relative left-0 md:left-2.5 text-left cursor-pointer">
         CodeStation
       </span>

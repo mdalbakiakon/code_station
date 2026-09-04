@@ -3,7 +3,6 @@ import LandingNav from "../components/LandingNav";
 import HeroSection from "./LandingSubPages/HeroSection";
 import PlatformSection from "./LandingSubPages/PlatformSection";
 import ImpressionSection from "./LandingSubPages/ImpressionSection";
-import LandingBanner from "../components/LandingBanner";
 import LandingFooter from "../components/LandingFooter";
 
 
@@ -25,7 +24,6 @@ const Landing = () => {
       <HeroSection />
       <PlatformSection index={index} distance={distance} barClick={barClick} />
       <ImpressionSection />
-      <LandingBanner />
       <LandingFooter />
     </>
   );

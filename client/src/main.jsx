@@ -3,12 +3,12 @@ import { BrowserRouter } from "react-router-dom";
 import "lenis/dist/lenis.css";
 import "./index.css";
 import App from "./App.jsx";
-import SmoothScroll from "./components/SmoothScroll.jsx";
+import ReactLenis from "lenis/react";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <SmoothScroll>
+    <ReactLenis root>
       <App />
-    </SmoothScroll>
+    </ReactLenis>
   </BrowserRouter>,
 );
