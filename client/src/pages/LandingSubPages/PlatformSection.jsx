@@ -46,7 +46,7 @@ const PlatformSection = ({ index, distance, barClick }) => {
         ))}
       </ul>
 
-      <div className="relative w-full aspect-4/5 md:aspect-video rounded-[50px] overflow-hidden">
+      <div className="relative w-full aspect-4/5 md:aspect-video [clip-path:inset(0_round_50px)]">
         {isVideoFile(backgroundAssets[index].src) ? (
           <video
             key={backgroundAssets[index].src}
@@ -55,7 +55,7 @@ const PlatformSection = ({ index, distance, barClick }) => {
             playsInline
             loop
             muted
-            className="absolute inset-0 w-full h-full object-cover object-center"
+            className="absolute inset-0 w-full h-full object-cover object-center [clip-path:inset(0_round_50px)]"
           />
         ) : (
           <img
