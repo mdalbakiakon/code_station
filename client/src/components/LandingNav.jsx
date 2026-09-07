@@ -1,5 +1,5 @@
 import { HiMenuAlt3 } from "react-icons/hi";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const LandingNav = () => {
   return (
@@ -8,7 +8,7 @@ const LandingNav = () => {
         CodeStation
       </span>
 
-      <nav className="hidden md:flex justify-center items-center font-rg gap-7.5">
+      <nav className="hidden md:flex justify-center items-center font-rg gap-7.5 absolute h-full left-1/2 -translate-x-1/2 top-0">
         <NavLink
           to="/"
           className={({ isActive }) =>
@@ -43,16 +43,25 @@ const LandingNav = () => {
         </NavLink> */}
       </nav>
 
-      <button className="h-full px-5 py-1.5 rounded-lg bg-(--land-txt-main) text-(--land-bg-main) font-rg hidden md:flex justify-center items-center cursor-pointer relative overflow-hidden">
-        <span className="absolute inset-0 bg-[conic-gradient(from_-90deg,#f48139,#e57549,#4b11cd,#f48139)] z-10 blur-xs scale-150"></span>
-        <span className="relative z-20 text-sm md:text-lg leading-7 tracking-normal text-(--land-txt-main)">
-          Signup
-        </span>
-      </button>
+      <div className="flex justify-center items-center gap-1">
+        {/* login btn */}
+        <Link to='/login' className="h-full px-5 py-1.5 rounded-lg text-(--land-bg-main) font-rg hidden md:flex justify-center items-center cursor-pointer relative overflow-hidden hover:bg-white/10">
+          <span className="relative z-20 text-sm md:text-lg leading-7 tracking-normal text-(--land-txt-main)">
+            Login
+          </span>
+        </Link>
 
-      <button className="md:hidden h-full aspect-square flex justify-center items-center">
-        <HiMenuAlt3 className="text-xl" />
-      </button>
+        <Link to='/signup' className="h-full px-5 py-1.5 rounded-lg bg-(--land-txt-main) text-(--land-bg-main) font-rg hidden md:flex justify-center items-center cursor-pointer relative overflow-hidden">
+          <span className="absolute inset-0 bg-[conic-gradient(from_-90deg,#f48139,#e57549,#4b11cd,#f48139)] z-10 blur-xs scale-150"></span>
+          <span className="relative z-20 text-sm md:text-lg leading-7 tracking-normal text-(--land-txt-main)">
+            Signup
+          </span>
+        </Link>
+
+        <button className="md:hidden h-full aspect-square flex justify-center items-center">
+          <HiMenuAlt3 className="text-xl" />
+        </button>
+      </div>
     </header>
   );
 };

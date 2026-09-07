@@ -21,7 +21,6 @@ const Landing = () => {
 
   return (
     <>
-      <LandingNav />
       <HeroSection />
       <PlatformSection index={index} distance={distance} barClick={barClick} />
       <ImpressionSection />
