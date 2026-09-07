@@ -4,6 +4,7 @@ import HeroSection from "./LandingSubPages/HeroSection";
 import PlatformSection from "./LandingSubPages/PlatformSection";
 import ImpressionSection from "./LandingSubPages/ImpressionSection";
 import LandingFooter from "../components/LandingFooter";
+import Testimonials from "./LandingSubPages/Testimonials";
 
 
 const ITEM_WIDTH = 168;
@@ -24,6 +25,7 @@ const Landing = () => {
       <HeroSection />
       <PlatformSection index={index} distance={distance} barClick={barClick} />
       <ImpressionSection />
+      <Testimonials />
       <LandingFooter />
     </>
   );

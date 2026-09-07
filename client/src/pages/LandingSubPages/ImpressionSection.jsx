@@ -7,7 +7,7 @@ import { RiLinkedinLine } from "react-icons/ri";
 
 const ImpressionSection = () => {
   return (
-    <section className="relative">
+    <section className="relative mb-47">
       <h2 className="text-transparent absolute top-12.5 left-1/2 -translate-x-1/2 bg-clip-text font-ex leading-none text-[250px] w-full bg-[linear-gradient(to_bottom,#505050,transparent_95%)] text-center tracking-tighter select-none">
         inspiration
       </h2>

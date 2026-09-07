@@ -25,7 +25,7 @@ const LandingNav = () => {
         >
           Courses
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to="/instructors"
           className={({ isActive }) =>
             isActive ? "text-(--land-txt-sec) font-ex" : ""
@@ -40,7 +40,7 @@ const LandingNav = () => {
           }
         >
           Testimonials
-        </NavLink>
+        </NavLink> */}
       </nav>
 
       <button className="h-full px-5 py-1.5 rounded-lg bg-(--land-txt-main) text-(--land-bg-main) font-rg hidden md:flex justify-center items-center cursor-pointer relative overflow-hidden">
