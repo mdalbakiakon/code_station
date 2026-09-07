@@ -17,7 +17,7 @@ const testimonials = [
     name: "Sara Islam",
     role: "Product Designer",
     quote:
-      "Clear explanations, real projects, and instructors who actually respond. Exactly what I needed.",
+      "Clear explanations, real projects, and instructors who actually respond. Exactly what I needed to kick start my career.",
     avatar: "/test2.webp",
   }
 ];
