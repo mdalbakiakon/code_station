@@ -8,13 +8,13 @@ import { RiLinkedinLine } from "react-icons/ri";
 const ImpressionSection = () => {
   return (
     <section className="relative mb-47">
-    <div className="absolute top-17.5 h-57.5 w-full flex justify-center items-end overflow-hidden">
+    <div className="absolute top-17.5 h-18 min-[480px]:h-24 sm:h-36.25 md:h-42.5 lg:h-57.5 w-full flex justify-center items-end overflow-hidden">
         <h2 className="h-fit font-ex leading-none text-7xl min-[480px]:text-8xl sm:text-[145px] md:text-[170px] lg:text-[230px] w-full bg-[linear-gradient(to_bottom,#505050,transparent_95%)] text-center tracking-tighter select-none bg-clip-text text-transparent">
         inspiration
       </h2>
     </div>
 
-      <div className="w-full h-fit flex flex-col lg:flex-row justify-center items-center gap-1 p-2.5 my-47 relative z-20">
+      <div className="w-full h-fit flex flex-col lg:flex-row justify-center items-center gap-1 p-2.5 mt-10 min-[480px]:mt-16 sm:mt-28.5 md:mt-34.5 lg:mt-47 relative z-20">
         <div className="w-full flex-1 flex flex-col rounded-[50px] bg-(--land-txt-main) aspect-4/5 min-[480px]:aspect-square md:aspect-2/1.75 p-5 md:p-7.5 gap-7.5 relative overflow-hidden">
           <span className="w-8.5 md:w-11 aspect-square absolute top-5 md:top-7.5 left-5 md:left-7.5 border-t-3 border-l-3 rounded-tl-[30px] border-(--land-txt-sub)"></span>
 
