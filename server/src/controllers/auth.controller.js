@@ -6,6 +6,7 @@ import generateVarificationCode from "../utils/generateVerificationCode.util.js"
 import resetModel from "../models/reset.model.js";
 import buildResetPasswordEmail from "../utils/buildResetPasswordEmail.util.js";
 import sendEmail from "../services/sendEmail.service.js";
+import { hashCryptoCode } from "../utils/cryptoHash.util.js";
 
 // POST -- /api/auth/register
 const registerUser = async (req, res) => {
@@ -185,8 +186,7 @@ const forgotPassword = async (req, res) => {
 
         // generate verification code and email it
         const getCode = generateVarificationCode();
-        const salt = await bcrypt.genSalt(10);
-        const hashedCode = await bcrypt.hash(getCode, salt);
+        const hashedCode = hashCryptoCode(getCode);
 
         // save the hashed in the db
         await resetModel.findOneAndUpdate(
@@ -221,4 +221,41 @@ const forgotPassword = async (req, res) => {
     }
 }
 
-export default { registerUser, loginUser, logoutUser, forgotPassword };
+// POST -- /api/auth/reset-password
+const resetPassword = async (req, res) => {
+    try {
+        const { code, newPassword } = req.body;
+        const hashedCode = hashCryptoCode(code);
+
+        const resetRecord = await resetModel.findOne({ code: hashedCode });
+
+        if (!resetRecord) {
+            return res.status(400).json({ message: "invalid or expired verification code" });
+        }
+
+        // if fall under 60s expire window
+        if (resetRecord.expiresAt < new Date()) {
+            await resetModel.deleteOne({ _id: resetRecord._id });
+            return res.status(400).json({ message: "verification code has expired, please request a new one" });
+        }
+
+        const user = await userModel.findById(resetRecord.userId);
+        if (!user) {
+            return res.status(404).json({ message: "no account found for this reset request" });
+        }
+
+        // adding the new password
+        user.password = newPassword;
+        await user.save();
+
+        await resetModel.deleteOne({ _id: resetRecord._id });
+
+        return res.status(200).json({ message: "password reset successfully" });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "something went wrong in resetPassword", error: error.message });
+    }
+}
+
+export default { registerUser, loginUser, logoutUser, forgotPassword, resetPassword };

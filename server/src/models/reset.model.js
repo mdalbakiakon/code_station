@@ -9,7 +9,8 @@ const resetSchema = new mongoose.Schema({
     },
     code: {
         type: String,
-        required: true
+        required: true,
+        index: true
     },
     expiresAt: {
         type: Date,
