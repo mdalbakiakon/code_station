@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../api/axios.js";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -21,14 +21,10 @@ const Signup = () => {
     setError("");
 
     try {
-      await axios.post(
-        "/api/auth/register",
-        {
-          identifier: formData.email,
-          password: formData.password,
-        },
-        { withCredentials: true }
-      );
+      await api.post("/auth/register", {
+        identifier: formData.email,
+        password: formData.password,
+      });
 
       window.location.href = "/dashboard";
     } catch (err) {
