@@ -164,4 +164,35 @@ const authInstructor = async (req, res, next) => {
 }
 
 
-export default { inputValidation, verifyToken, authAdmin, authInstructor };
+// verify which identifier user is using -- we will be using it for forget password
+const identifierValidation = async (req, res, next) => {
+    try {
+        let { identifier } = req.body;
+
+        if (!identifier || identifier.trim() === "") {
+            return res.status(400).json({
+                "message": "identifier field can not be empty"
+            });
+        }
+
+        identifier = identifier.trim();
+
+        if (identifier.includes('@')) {
+            req.email = identifier;
+        } else {
+            req.username = identifier;
+        }
+
+        next();
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            "message": "something went wrong in identifierValidation",
+            "error": error.message
+        });
+    }
+}
+
+
+export default { inputValidation, verifyToken, authAdmin, authInstructor, identifierValidation };

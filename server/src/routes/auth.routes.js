@@ -15,4 +15,7 @@ router.post('/login', authMiddleware.inputValidation, authController.loginUser);
 // POST -- logout
 router.post('/logout', authMiddleware.verifyToken, authController.logoutUser);
 
+// POST -- forget-password
+router.post('/forgot-password', authMiddleware.identifierValidation, authController.forgotPassword);
+
 export default router;

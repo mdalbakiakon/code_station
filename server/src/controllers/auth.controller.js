@@ -1,6 +1,11 @@
 import blacklistModel from "../models/blacklist.model.js";
 import userModel from "../models/user.model.js";
 import authUtil from "../utils/auth.util.js";
+import bcrypt from "bcrypt";
+import generateVarificationCode from "../utils/generateVerificationCode.util.js";
+import resetModel from "../models/reset.model.js";
+import buildResetPasswordEmail from "../utils/buildResetPasswordEmail.util.js";
+import sendEmail from "../services/sendEmail.service.js";
 
 // POST -- /api/auth/register
 const registerUser = async (req, res) => {
@@ -162,4 +167,55 @@ const logoutUser = async (req, res) => {
 }
 
 
-export default { registerUser, loginUser, logoutUser };
+// POST -- /api/auth/forget-password
+const forgotPassword = async (req, res) => {
+    try {
+
+        // find user by whichever identifier was validated
+        const query = req.email ? { email: req.email } : { username: req.username };
+
+        const user = await userModel.findOne(query);
+
+        // if no user found with that identifier
+        if (!user) {
+            return res.status(404).json({
+                message: "no account found with this identifier"
+            });
+        }
+
+        // generate verification code and email it
+        const getCode = generateVarificationCode();
+        const salt = await bcrypt.genSalt(10);
+        const hashedCode = await bcrypt.hash(getCode, salt);
+
+        // save the hashed in the db
+        await resetModel.create({
+            userId: user._id,
+            code: hashedCode,
+            expiresAt: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes from now
+        });
+
+        // build and send the email
+        const emailHtml = buildResetPasswordEmail(getCode);
+
+        // using resend send email
+        await sendEmail({
+            to: user.email,
+            subject: "CodeStation - Reset Password Code",
+            html: emailHtml
+        })
+
+        return res.status(200).json({
+            message: "verification code sent to your email"
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: "something went wrong in forgotPassword",
+            error: error.message
+        });
+    }
+}
+
+export default { registerUser, loginUser, logoutUser, forgotPassword };
