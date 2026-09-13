@@ -21,6 +21,6 @@ const resetSchema = new mongoose.Schema({
 // auto-delete once expired
 resetSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
-const resetModel = mongoose.model("resetCodes", resetSchema);
+const resetModel = mongoose.model("resetcodes", resetSchema);
 
 export default resetModel;

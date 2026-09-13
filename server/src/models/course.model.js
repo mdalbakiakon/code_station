@@ -15,22 +15,24 @@ const courseSchema = new mongoose.Schema({
         trim: true,
         maxlength: [5000, "description maximum length has exceeded"]
     },
-    instructors: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
-        required: [true, "instructors array required"]
-    }],
+    instructors: {
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
+        validate: {
+            validator: (arr) => arr.length > 0,
+            message: "at least one instructor is required"
+        }
+    },
     thumbnail_img: {
         type: String,
         required: [true, "course thumbnail is required"],
         trim: true
     },
-    thumbnail_public_id:{
+    thumbnail_public_id: {
         type: String,
         trim: true,
         default: ""
     },
-    thumbnail_resource_type:{
+    thumbnail_resource_type: {
         type: String,
         trim: true,
         default: ""

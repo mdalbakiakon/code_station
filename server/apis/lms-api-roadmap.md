@@ -11,10 +11,10 @@ A living tracker of every API endpoint needed for a production-grade LMS, organi
 - [x] `POST /api/auth/logout`
 - [ ] `POST /api/auth/refresh` — refresh token flow
 - [x] `POST /api/auth/forgot-password`
-- [ ] `POST /api/auth/reset-password`
+- [x] `POST /api/auth/reset-password`
 - [ ] `POST /api/auth/verify-email`
 - [ ] `POST /api/auth/resend-verification`
-- [ ] Rate limiting middleware on login/register
+- [x] Rate limiting middleware on forgot-password/reset-password
 
 ---
 
