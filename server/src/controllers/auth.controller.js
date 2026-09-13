@@ -189,11 +189,14 @@ const forgotPassword = async (req, res) => {
         const hashedCode = await bcrypt.hash(getCode, salt);
 
         // save the hashed in the db
-        await resetModel.create({
-            userId: user._id,
-            code: hashedCode,
-            expiresAt: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes from now
-        });
+        await resetModel.findOneAndUpdate(
+            { userId: user._id },
+            {
+                code: hashedCode,
+                expiresAt: new Date(Date.now() + 10 * 60 * 1000)
+            },
+            { upsert: true, returnDocument: 'after' }
+        );
 
         // build and send the email
         const emailHtml = buildResetPasswordEmail(getCode);

@@ -4,7 +4,8 @@ const resetSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "users",
-        required: true
+        required: true,
+        unique: true
     },
     code: {
         type: String,

@@ -16,7 +16,7 @@ const sendEmail = async ({ to, subject, html }) => {
         });
 
         await transporter.sendMail({
-            from: `"Code Station" <${process.env.BREVO_SENDER_EMAIL}>`,
+            from: `"CodeStation" <${process.env.BREVO_SENDER_EMAIL}>`,
             to,
             subject,
             html,
