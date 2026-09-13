@@ -7,16 +7,7 @@ const inputValidation = async (req, res, next) => {
     try {
 
         // user input values
-        const { identifier, password, role } = req.body;
-
-        // role based req handle
-        // if the role is not given
-        if (!req.body.role) {
-            req.role = "student"
-        };
-
-        // if given from the client input
-        req.role = role;
+        const { identifier, password } = req.body;
 
         // if user gives null empty undefined input value
         if (!identifier || !password) {

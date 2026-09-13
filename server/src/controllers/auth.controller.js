@@ -1,7 +1,6 @@
 import blacklistModel from "../models/blacklist.model.js";
 import userModel from "../models/user.model.js";
 import authUtil from "../utils/auth.util.js";
-import bcrypt from "bcrypt";
 import generateVarificationCode from "../utils/generateVerificationCode.util.js";
 import resetModel from "../models/reset.model.js";
 import buildResetPasswordEmail from "../utils/buildResetPasswordEmail.util.js";
@@ -20,8 +19,11 @@ const registerUser = async (req, res) => {
         }
 
         // user input from middleware
-        const { email, password, role } = req;
+        const { email, password } = req;
 
+        // registration always creates a student — instructor/admin roles
+        // are only granted later via admin PATCH, never chosen at signup
+        const role = "student";
 
         // checking if exist user
         const isUserExist = await userModel.exists({
@@ -147,7 +149,7 @@ const logoutUser = async (req, res) => {
         // clearing cookie from client side
         res.clearCookie("CODE_STATION_TOKEN", {
             httpOnly: true,
-            sameSite: 'strict',
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             secure: process.env.NODE_ENV === "production"
         })
 
