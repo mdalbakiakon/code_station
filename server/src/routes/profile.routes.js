@@ -27,7 +27,7 @@ router.post('/me/upload-avatar', authMiddleware.verifyToken, upload.single('avat
 router.post('/me/upload-cover', authMiddleware.verifyToken, upload.single('cover'), profileController.uploadCoverPic);
 
 // PATCH -- update user password
-router.patch('/me/password', authMiddleware.verifyToken, profileController.changePassword);
+router.patch('/me/change-password', authMiddleware.verifyToken, profileController.changePassword);
 
 // DELETE -- delete user profile
 router.delete('/me/delete-profile', authMiddleware.verifyToken, profileController.deleteProfile)

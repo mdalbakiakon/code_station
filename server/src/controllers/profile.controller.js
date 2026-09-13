@@ -174,7 +174,7 @@ const uploadCoverPic = async (req, res) => {
 }
 
 
-// PATCH /api/users/me/password
+// PATCH /api/users/me/change-password
 const changePassword = async (req, res) => {
     try {
 

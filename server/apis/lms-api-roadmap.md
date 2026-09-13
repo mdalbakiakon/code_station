@@ -10,7 +10,7 @@ A living tracker of every API endpoint needed for a production-grade LMS, organi
 - [x] `POST /api/auth/login`
 - [x] `POST /api/auth/logout`
 - [ ] `POST /api/auth/refresh` — refresh token flow
-- [ ] `POST /api/auth/forgot-password`
+- [x] `POST /api/auth/forgot-password`
 - [ ] `POST /api/auth/reset-password`
 - [ ] `POST /api/auth/verify-email`
 - [ ] `POST /api/auth/resend-verification`
@@ -24,7 +24,7 @@ A living tracker of every API endpoint needed for a production-grade LMS, organi
 - [x] `PATCH /api/users/me`
 - [x] `POST /api/users/me/upload-avatar`
 - [x] `POST /api/users/me/upload-cover`
-- [x] `PATCH /api/users/me/password`
+- [x] `PATCH /api/users/me/change-password`
 - [x] `DELETE /api/users/me/delete-profile`
 - [ ] `GET /api/instructors/me/courses` — instructor's own course list
 - [ ] `GET /api/users/me/enrollments` — student's enrolled courses (see Enrollment module)
