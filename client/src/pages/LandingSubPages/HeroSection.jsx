@@ -5,7 +5,7 @@ const HeroSection = () => {
   return (
     <section className="relative flex flex-col justify-center items-center font-ex p-2.5 md:p-5 h-svh! mt-0!">
       <img
-        src="./hero.png"
+        src="/hero.png"
         loading="eager"
         fetchPriority="high"
         decoding="async"

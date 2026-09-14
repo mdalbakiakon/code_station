@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import api from "../api/axios.js";
+import { Link, useNavigate } from "react-router-dom";
+import ErrorBox from "../components/ErrorBox.jsx";
 
 const Signup = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -25,8 +29,9 @@ const Signup = () => {
         identifier: formData.email,
         password: formData.password,
       });
+    
 
-      window.location.href = "/dashboard";
+      navigate("/dashboard/student");
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong");
     } finally {
@@ -36,7 +41,7 @@ const Signup = () => {
 
   return (
     <div className="w-full h-svh bg-(--landing-bg-main) flex justify-center items-center gap-1 p-1">
-      <div className="flex-1 h-full [clip-path:inset(0_round_50px)] relative">
+      <div className="flex-1 h-full [clip-path:inset(0_round_50px)] relative md:flex hidden">
         <img
           src="/signup.webp"
           alt="code-station-signup"
@@ -58,9 +63,10 @@ const Signup = () => {
       </div>
 
       {/* signning up form */}
-      <div className="flex-1 h-full flex items-center justify-center font-rg leading-none tracking-tight">
+      <div className="flex-1 h-full flex items-center justify-center font-rg leading-none tracking-tight p-2.5">
         <form
           onSubmit={handleSubmit}
+          noValidate
           className="w-full max-w-sm flex flex-col gap-6"
         >
           <div className="flex flex-col gap-1 mb-2">
@@ -72,11 +78,7 @@ const Signup = () => {
             </p>
           </div>
 
-          {error && (
-            <div className="text-sm text-red-500 bg-red-500/10 rounded-lg px-3 py-2">
-              {error}
-            </div>
-          )}
+          {error && <ErrorBox err={error} />}
 
           <div className="flex flex-col gap-1.5">
             <label htmlFor="email" className="text-sm text-(--land-txt-sub)/70">
@@ -86,7 +88,7 @@ const Signup = () => {
               id="email"
               name="email"
               type="email"
-              required
+              autoComplete="username"
               value={formData.email}
               onChange={handleChange}
               placeholder="you@example.com"
@@ -102,7 +104,7 @@ const Signup = () => {
               id="password"
               name="password"
               type="password"
-              required
+              autoComplete="new-password"
               minLength={8}
               value={formData.password}
               onChange={handleChange}
@@ -121,9 +123,9 @@ const Signup = () => {
 
           <p className="text-sm text-(--land-txt-sub)/60 text-center">
             Already have an account?{" "}
-            <a href="/login" className="text-(--land-txt-main) underline underline-offset-2">
+            <Link to="/login" className="text-(--land-txt-main) underline underline-offset-2">
               Log in
-            </a>
+            </Link>
           </p>
         </form>
       </div>
