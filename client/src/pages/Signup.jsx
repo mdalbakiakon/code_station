@@ -10,6 +10,7 @@ const Signup = () => {
     email: "",
     password: "",
   });
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -29,7 +30,6 @@ const Signup = () => {
         identifier: formData.email,
         password: formData.password,
       });
-    
 
       navigate("/dashboard/student");
     } catch (err) {
@@ -97,7 +97,10 @@ const Signup = () => {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="password" className="text-sm text-(--land-txt-sub)/70">
+            <label
+              htmlFor="password"
+              className="text-sm text-(--land-txt-sub)/70"
+            >
               Password
             </label>
             <input
@@ -123,7 +126,10 @@ const Signup = () => {
 
           <p className="text-sm text-(--land-txt-sub)/60 text-center">
             Already have an account?{" "}
-            <Link to="/login" className="text-(--land-txt-main) underline underline-offset-2">
+            <Link
+              to="/login"
+              className="text-(--land-txt-main) underline underline-offset-2"
+            >
               Log in
             </Link>
           </p>

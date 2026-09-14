@@ -4,6 +4,7 @@ import Landing from "../pages/Landing";
 import LandingLayout from "./LandingLayout";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
+import StudentDash from "../pages/DashboardPages/StudentDash";
 
 const AllRoutes = () => {
   return (
@@ -14,6 +15,9 @@ const AllRoutes = () => {
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/dashboard">
+          <Route path="student" element={<StudentDash />} />
+        </Route>
       </Routes>
     </>
   );
